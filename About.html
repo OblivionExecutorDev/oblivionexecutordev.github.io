@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Oblivion | Minecraft Hacked Client & Roblox Executor</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7e22ce',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-fast': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'fade-in': 'fadeIn 1s ease-in',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'fade-in-down': 'fadeInDown 0.8s ease-out',
+                        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeInDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        glowPulse: {
+                            '0%, 100%': { 'box-shadow': '0 0 15px rgba(168, 85, 247, 0.5)' },
+                            '50%': { 'box-shadow': '0 0 25px rgba(168, 85, 247, 0.9)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f0e17;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #a855f7, #e879f9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
+        }
+        
+        .blob {
+            filter: blur(60px);
+            opacity: 0.2;
+            position: absolute;
+            z-index: -1;
+            border-radius: 50%;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(168, 85, 247, 0.3), 0 10px 10px -5px rgba(168, 85, 247, 0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #a855f7;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            color: #a855f7;
+        }
+        
+        .download-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+        
+        .download-btn:hover::after {
+            left: 100%;
+            top: 100%;
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gradient-flow {
+            background: linear-gradient(270deg, #7e22ce, #a855f7, #e879f9);
+            background-size: 200% 200%;
+            animation: gradientFlow 8s ease infinite;
+        }
+        
+        .section-divider {
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(15, 14, 23, 0), rgba(168, 85, 247, 0.1), rgba(15, 14, 23, 0));
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #a855f7;
+            border: 3px solid #7e22ce;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 25px;
+            width: 1px;
+            height: calc(100% - 15px);
+            background-color: #a855f7;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .team-card:hover .team-social {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .team-social {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card {
+            background: rgba(168, 85, 247, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            background: rgba(168, 85, 247, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .hero-pattern {
+            background-image: radial-gradient(circle at 25% 25%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+        }
+        
+        .hero-glass {
+            backdrop-filter: blur(16px);
+            background: rgba(15, 14, 23, 0.6);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        
+        .hero-highlight {
+            position: relative;
+        }
+        
+        .hero-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(168, 85, 247, 0.1), transparent);
+            z-index: -1;
+            border-radius: inherit;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid #a855f7;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #a855f7 }
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        .animate-delay-4 {
+            animation-delay: 0.8s;
+        }
+        
+        .animate-delay-5 {
+            animation-delay: 1s;
+        }
+        
+        .hero-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .hero-btn:hover::before {
+            left: 100%;
+        }
+        
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
+        }
+        
+        .hero-btn:active {
+            transform: translateY(0);
+        }
+        
+        .hero-image {
+            filter: drop-shadow(0 20px 30px rgba(168, 85, 247, 0.3));
+            transition: all 0.5s ease;
+        }
+        
+        .hero-image:hover {
+            transform: translateY(-10px) scale(1.05);
+            filter: drop-shadow(0 30px 40px rgba(168, 85, 247, 0.4));
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body class="hero-pattern">
+    <!-- Animated Particles Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Blob background elements -->
+    <div class="blob w-96 h-96 bg-purple-500 top-0 left-0 animate-float"></div>
+    <div class="blob w-96 h-96 bg-purple-600 bottom-0 right-0 animate-float-fast"></div>
+    <div class="blob w-64 h-64 bg-purple-400 top-1/2 left-1/4 animate-float"></div>
+    <div class="blob w-80 h-80 bg-purple-700 top-1/3 right-1/4 animate-float-fast"></div>
+    
+    <!-- Navigation -->
+    <nav class="backdrop-blur-md bg-black/50 border-b border-purple-900/50 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <!-- Logo placeholder -->
+                        <div class="flex-shrink-0 w-11 h-11">
+                            <div class="w-full h-full rounded-lg border border-purple-500/30 bg-purple-500/20 flex items-center justify-center overflow-hidden glow">
+                                <img src="logo.png" alt="Oblivion Logo" class="w-20 h-20 object-contain">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="mainsite.html#home" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                            <a href="#features" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Features</a>
+                            <a href="mainsite.html#products" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Products</a>
+                            <a href="mainsite.html#pricing" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Pricing</a>
+                            <a href="mainsite.html#faq" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">FAQ</a>
+							<a href="About.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+							<a href="InstallationGuide.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Guide</a>
+							<a href="Scripts.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Script Hub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <a href="#download" class="bg-gradient-to-r from-purple-600 to-purple-400 text-white px-4 py-2 rounded-md text-sm font-medium hover:from-purple-700 hover:to-purple-500 transition-all duration-300 shadow-lg glow hover:scale-105">
+                            Download Now
+                        </a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-purple-400 hover:text-white hover:bg-purple-700 focus:outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="mainsite.html#home" class="block px-3 py-2 text-base font-medium text-white hover:bg-purple-700">Home</a>
+            <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-700">Features</a>
+            <a href="mainsite.html#products" class="block px-3 py-2 text-base font-medium text-white hover:bg-purple-700">Products</a>
+            <a href="mainsite.html#pricing" class="block px-3 py-2 text-base font-medium text-white hover:bg-purple-700">Pricing</a>
+            <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-700">FAQ</a>
+			<a href="About.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+			<a href="InstallationGuide.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Guide</a>
+			<a href="Scripts.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Script Hub</a>
+            <a href="#download" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-purple-600">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left animate-fade-in-down">
+                    <div class="mb-6">
+                        <span class="inline-block bg-purple-900/30 text-purple-400 px-3 py-1 rounded-full text-sm font-medium mb-4 animate-fade-in">
+                            VERSION 3.5 PRO - NOW AVAILABLE
+                        </span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                        <span class="gradient-text glow-text">Oblivion</span>
+                    </h1>
+                    
+                    <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto lg:mx-0 mb-8 animate-fade-in animate-delay-1">
+                        The most advanced, undetectable <span class="text-purple-300">Minecraft hacked client</span> and <span class="text-purple-300">Roblox executor</span> on the market.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in animate-delay-2">
+                        <a href="mainsite.html#download" class="hero-btn bg-gradient-to-r from-purple-600 to-purple-500 text-white px-8 py-4 rounded-lg font-bold shadow-lg">
+                            <i class="fas fa-download mr-2"></i> Download Now
+                        </a>
+                        <a href="https://discord.gg/Epn4J6aBnT" class="hero-btn bg-black/40 border border-purple-900/50 text-white px-8 py-4 rounded-lg font-bold hover:bg-black/60 transition-colors">
+                            <i class="fas fa-users mr-2"></i> Join Community
+                        </a>
+                    </div>
+                    
+                    <div class="mt-12 flex flex-wrap gap-6 justify-center lg:justify-start animate-fade-in animate-delay-3">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-purple-400"></i>
+                            </div>
+                            <span class="text-gray-300">Undetectable</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center mr-3">
+                                <i class="fas fa-bolt text-purple-400"></i>
+                            </div>
+                            <span class="text-gray-300">Lightning Fast</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center mr-3">
+                                <i class="fas fa-lock text-purple-400"></i>
+                            </div>
+                            <span class="text-gray-300">Secure</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative hidden lg:block animate-fade-in-up">
+                    <div class="relative">
+                        <div class="absolute -top-10 -left-10 w-32 h-32 bg-purple-500/10 rounded-full backdrop-blur-sm animate-float"></div>
+                        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-600/10 rounded-full backdrop-blur-sm animate-float-fast"></div>
+                        
+                        <div class="hero-glass rounded-2xl overflow-hidden p-2 glow-pulse">
+                            <div class="bg-gradient-to-br from-purple-900/30 to-black/50 rounded-xl overflow-hidden border border-purple-900/30">
+                                <div class="p-4 bg-gray-900/50 flex items-center">
+                                    <div class="flex space-x-2">
+                                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    </div>
+                                    <div class="ml-4 text-sm text-gray-400">Oblivion Client</div>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex justify-center mb-6">
+                                        <img src="logo2.png" alt="Oblivion Logo" class="w-64 h-64 object-contain hero-image">
+                                    </div>
+                                    <div class="text-center mb-6">
+                                        <h3 class="text-2xl font-bold text-white mb-2">Oblivion Client</h3>
+                                        <p class="text-purple-300">Version 3.5 Pro</p>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-4 text-center">
+                                        <div class="bg-purple-900/20 rounded-lg p-3">
+                                            <div class="text-purple-400 text-sm">Users</div>
+                                            <div class="text-white font-bold">50K+</div>
+                                        </div>
+                                        <div class="bg-purple-900/20 rounded-lg p-3">
+                                            <div class="text-purple-400 text-sm">Uptime</div>
+                                            <div class="text-white font-bold">99.9%</div>
+                                        </div>
+                                        <div class="bg-purple-900/20 rounded-lg p-3">
+                                            <div class="text-purple-400 text-sm">Detection</div>
+                                            <div class="text-white font-bold">0.01%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scroll-indicator hidden lg:block">
+                <a href="#about" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-chevron-down text-2xl animate-bounce"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Our Story</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-transparent mx-auto mb-6"></div>
+                <p class="text-gray-400 max-w-4xl mx-auto text-lg">
+                    Oblivion was born in 2022 from a simple idea: create the most powerful yet undetectable gaming tools that push the boundaries of what's possible in Minecraft and Roblox.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in-down">
+                    <div class="hero-glass rounded-2xl overflow-hidden p-1">
+                        <div class="bg-gradient-to-br from-purple-900/20 to-black/50 rounded-xl overflow-hidden border border-purple-900/30">
+                            <div class="p-6">
+                                <div class="flex items-start mb-6">
+                                    <div class="w-16 h-16 rounded-full bg-purple-900/20 border border-purple-900/30 flex items-center justify-center mr-4">
+                                        <i class="fas fa-code text-2xl text-purple-400"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white mb-2">From Passion to Power</h3>
+                                        <p class="text-gray-400">
+                                            What started as a passion project among a small group of developers has grown into one of the most respected names in the game modification community.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start mb-6">
+                                    <div class="w-16 h-16 rounded-full bg-purple-900/20 border border-purple-900/30 flex items-center justify-center mr-4">
+                                        <i class="fas fa-users text-2xl text-purple-400"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white mb-2">Elite Team</h3>
+                                        <p class="text-gray-400">
+                                            Our team consists of elite reverse engineers, security experts, and passionate gamers who understand exactly what players need to enhance their gaming experience.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="w-16 h-16 rounded-full bg-purple-900/20 border border-purple-900/30 flex items-center justify-center mr-4">
+                                        <i class="fas fa-rocket text-2xl text-purple-400"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white mb-2">Cutting-Edge Technology</h3>
+                                        <p class="text-gray-400">
+                                            We combine cutting-edge technology with deep game knowledge to create tools that are both powerful and reliable.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-fade-in-up">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="hero-highlight bg-black/30 border border-purple-900/30 rounded-xl p-6 text-center card-hover">
+                            <div class="w-20 h-20 bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4 glow">
+                                <i class="fas fa-user-shield text-3xl text-purple-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Security First</h3>
+                            <p class="text-gray-400 text-sm">
+                                Prioritised saftey and anti-detection techniques keep you safe and undetected.
+                            </p>
+                        </div>
+                        
+                        <div class="hero-highlight bg-black/30 border border-purple-900/30 rounded-xl p-6 text-center card-hover">
+                            <div class="w-20 h-20 bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4 glow">
+                                <i class="fas fa-tachometer-alt text-3xl text-purple-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Optimized</h3>
+                            <p class="text-gray-400 text-sm">
+                                Lightweight architecture ensures maximum performance with minimal resource usage.
+                            </p>
+                        </div>
+                        
+                        <div class="hero-highlight bg-black/30 border border-purple-900/30 rounded-xl p-6 text-center card-hover">
+                            <div class="w-20 h-20 bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4 glow">
+                                <i class="fas fa-sync-alt text-3xl text-purple-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Always Updated</h3>
+                            <p class="text-gray-400 text-sm">
+                                Weekly updates with new features and security patches keep you ahead of the game.
+                            </p>
+                        </div>
+                        
+                        <div class="hero-highlight bg-black/30 border border-purple-900/30 rounded-xl p-6 text-center card-hover">
+                            <div class="w-20 h-20 bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4 glow">
+                                <i class="fas fa-headset text-3xl text-purple-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">24/7 Support</h3>
+                            <p class="text-gray-400 text-sm">
+                                Our dedicated support team is always available to help with any issues.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 animate-fade-in">
+                <div class="bg-black/30 border border-purple-900/30 rounded-xl p-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <div class="mb-6 md:mb-0">
+                            <h3 class="text-xl font-bold text-white mb-2">Ready to experience the power of Oblivion?</h3>
+                            <p class="text-gray-400">Join thousands of satisfied users today.</p>
+                        </div>
+                        <a href="mainsite.html#download" class="bg-gradient-to-r from-purple-600 to-purple-500 text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:from-purple-700 hover:to-purple-600 transition-all">
+                            <i class="fas fa-download mr-2"></i> Download Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-purple-900/10 to-transparent">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Why Choose Oblivion?</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-transparent mx-auto mb-6"></div>
+                <p class="text-gray-400 max-w-3xl mx-auto text-lg">
+                    We've built our reputation on delivering the most advanced features with uncompromising security.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-black/30 border border-purple-900/30 rounded-xl p-8 card-hover animate-fade-in-up animate-delay-1">
+                    <div class="w-16 h-16 bg-purple-900/20 rounded-lg flex items-center justify-center mb-6 glow">
+                        <i class="fas fa-eye-slash text-3xl text-purple-400 feature-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Undetectable</h3>
+                    <p class="text-gray-400">
+                        Our proprietary obfuscation and injection techniques make Oblivion virtually invisible to anti-cheat systems. We constantly update our methods to stay ahead of detection algorithms.
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-black/30 border border-purple-900/30 rounded-xl p-8 card-hover animate-fade-in-up animate-delay-2">
+                    <div class="w-16 h-16 bg-purple-900/20 rounded-lg flex items-center justify-center mb-6 glow">
+                        <i class="fas fa-bolt text-3xl text-purple-400 feature-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Lightning Fast</h3>
+                    <p class="text-gray-400">
+                        Optimized with low-level programming and direct memory access, Oblivion executes commands faster than any competitor. Experience zero lag with our lightweight architecture.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-black/30 border border-purple-900/30 rounded-xl p-8 card-hover animate-fade-in-up animate-delay-3">
+                    <div class="w-16 h-16 bg-purple-900/20 rounded-lg flex items-center justify-center mb-6 glow">
+                        <i class="fas fa-sliders-h text-3xl text-purple-400 feature-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Fully Customizable</h3>
+                    <p class="text-gray-400">
+                        From UI themes to module configurations, every aspect of Oblivion can be tailored to your preferences. Our Lua scripting API allows for limitless customization.
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card bg-black/30 border border-purple-900/30 rounded-xl p-8 card-hover animate-fade-in-up animate-delay-4">
+                    <div class="w-16 h-16 bg-purple-900/20 rounded-lg flex items-center justify-center mb-6 glow">
+                        <i class="fas fa-users text-3xl text-purple-400 feature-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Vibrant Community</h3>
+                    <p class="text-gray-400">
+                        Join 50,000+ members in our Discord community sharing scripts, configurations, and strategies. Our developers actively engage with users to implement requested features.
+                    </p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card bg-black/30 border border-purple-900/30 rounded-xl p-8 card-hover animate-fade-in-up animate-delay-5">
+                    <div class="w-16 h-16 bg-purple-900/20 rounded-lg flex items-center justify-center mb-6 glow">
+                        <i class="fas fa-lock text-3xl text-purple-400 feature-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Safe & Secure</h3>
+                    <p class="text-gray-400">
+                        Oblivion includes built-in protection against malware and keyloggers. Our software is regularly audited by security experts to ensure your system's safety.
+                    </p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card bg-black/30 border border-purple-900/30 rounded-xl p-8 card-hover animate-fade-in-up animate-delay-6">
+                    <div class="w-16 h-16 bg-purple-900/20 rounded-lg flex items-center justify-center mb-6 glow">
+                        <i class="fas fa-shield-alt text-3xl text-purple-400 feature-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Securest Security</h3>
+                    <p class="text-gray-400">
+                        We implement many features to insure your usage and saftey. Your privacy is our top priority.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Advanced Technology</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-transparent mx-auto mb-6"></div>
+                <p class="text-gray-400 max-w-3xl mx-auto text-lg">
+                    Oblivion utilizes cutting-edge techniques to ensure maximum performance and security.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in-down">
+                    <ul class="space-y-6">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-12 h-12 rounded-full bg-purple-900/20 border border-purple-900/30 flex items-center justify-center mr-4 glow">
+                                    <i class="fas fa-code text-purple-400"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-2">Advanced Code</h3>
+                                <p class="text-gray-400">
+                                    Our executable changes its signature with each update to avoid pattern detection, making traditional signature-based detection methods ineffective.
+                                </p>
+                            </div>
+                        </li>
+                        
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-12 h-12 rounded-full bg-purple-900/20 border border-purple-900/30 flex items-center justify-center mr-4 glow">
+                                    <i class="fas fa-microchip text-purple-400"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-2">Kernel-Level Drivers</h3>
+                                <p class="text-gray-400">
+                                    For Roblox execution, we use signed drivers that operate at the kernel level for maximum performance and minimal detection risk.
+                                </p>
+                            </div>
+                        </li>
+                        
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-12 h-12 rounded-full bg-purple-900/20 border border-purple-900/30 flex items-center justify-center mr-4 glow">
+                                    <i class="fas fa-memory text-purple-400"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-2">Memory Obfuscation</h3>
+                                <p class="text-gray-400">
+                                    All memory modifications are cloaked using proprietary techniques that mimic legitimate game behavior, making memory scans ineffective.
+                                </p>
+                            </div>
+                        </li>
+                        
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-12 h-12 rounded-full bg-purple-900/20 border border-purple-900/30 flex items-center justify-center mr-4 glow">
+                                    <i class="fas fa-bug text-purple-400"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-2">Anti-Debugging</h3>
+                                <p class="text-gray-400">
+                                    Multiple layers of anti-debugging and anti-tampering measures protect the client from reverse engineering attempts.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="animate-fade-in-up">
+                    <div class="hero-glass rounded-2xl overflow-hidden p-1">
+                        <div class="bg-gradient-to-br from-purple-900/20 to-black/50 rounded-xl overflow-hidden border border-purple-900/30">
+                            <div class="p-4 bg-gray-900/50 flex items-center">
+                                <div class="flex space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="ml-4 text-sm text-gray-400">Oblivion Terminal</div>
+                            </div>
+                            <div class="p-6 font-mono text-sm">
+                                <div class="text-purple-400">// Oblivion Core Technologies</div>
+                                <div class="text-gray-500 mt-2">$ <span class="text-green-400">obfuscation</span> --level=max --anti-debug=true</div>
+                                <div class="text-gray-400 mt-1">> Initializing polymorphic engine...</div>
+                                <div class="text-gray-400 mt-1">> Loading kernel-mode driver (signed)</div>
+                                <div class="text-gray-500 mt-2">$ <span class="text-green-400">inject</span> --stealth --bypass=all</div>
+                                <div class="text-gray-400 mt-1">> Memory protection enabled</div>
+                                <div class="text-gray-400 mt-1">> Anti-screenshot active</div>
+                                <div class="text-gray-500 mt-2">$ <span class="text-green-400">status</span> --security</div>
+                                <div class="text-gray-400 mt-1">> All systems operational</div>
+                                <div class="text-gray-400 mt-1">> Detection probability: 0.01%</div>
+                                <div class="text-purple-400 mt-4">// Ready for execution</div>
+                                
+                                <div class="mt-6 pt-4 border-t border-purple-900/30">
+                                    <div class="flex">
+                                        <div class="w-1/3">
+                                            <div class="text-purple-400 text-xs">CPU USAGE</div>
+                                            <div class="h-2 bg-gray-800 rounded-full mt-1 overflow-hidden">
+                                                <div class="h-full bg-purple-500 rounded-full" style="width: 12%"></div>
+                                            </div>
+                                            <div class="text-gray-400 text-xs mt-1">12%</div>
+                                        </div>
+                                        <div class="w-1/3 px-2">
+                                            <div class="text-purple-400 text-xs">RAM USAGE</div>
+                                            <div class="h-2 bg-gray-800 rounded-full mt-1 overflow-hidden">
+                                                <div class="h-full bg-purple-500 rounded-full" style="width: 28%"></div>
+                                            </div>
+                                            <div class="text-gray-400 text-xs mt-1">28%</div>
+                                        </div>
+                                        <div class="w-1/3">
+                                            <div class="text-purple-400 text-xs">DETECTION RISK</div>
+                                            <div class="h-2 bg-gray-800 rounded-full mt-1 overflow-hidden">
+                                                <div class="h-full bg-green-500 rounded-full" style="width: 1%"></div>
+                                            </div>
+                                            <div class="text-gray-400 text-xs mt-1">0.01%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy & Security Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-purple-900/10 to-transparent">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Privacy & Security</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-transparent mx-auto mb-6"></div>
+                <p class="text-gray-400 max-w-3xl mx-auto text-lg">
+                    We take your privacy and security as seriously as you do. Here's how we protect you:
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-black/30 border border-purple-900/30 rounded-xl p-8 animate-fade-in-down">
+                    <h3 class="text-xl font-bold mb-4 text-purple-400 flex items-center">
+                        <i class="fas fa-user-shield mr-3"></i> Data Collection Policy
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        Oblivion collects minimal data necessary for functionality and absolutely nothing that could compromise your privacy:
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-purple-900/20 flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-check text-purple-400 text-xs"></i>
+                            </div>
+                            <span class="text-gray-400">No IP logging or tracking</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-purple-900/20 flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-check text-purple-400 text-xs"></i>
+                            </div>
+                            <span class="text-gray-400">No personal information collected</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-purple-900/20 flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-check text-purple-400 text-xs"></i>
+                            </div>
+                            <span class="text-gray-400">No usage analytics beyond basic version checks</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-purple-900/20 flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-check text-purple-400 text-xs"></i>
+                            </div>
+                            <span class="text-gray-400">All APIs and DLLs are trusted and safe</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-black/30 border border-purple-900/30 rounded-xl p-8 animate-fade-in-up">
+                    <h3 class="text-xl font-bold mb-4 text-purple-400 flex items-center">
+                        <i class="fas fa-lock mr-3"></i> Security Measures
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        Our multi-layered security approach ensures your safety:
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-purple-900/20 flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-shield-alt text-purple-400 text-xs"></i>
+                            </div>
+                            <span class="text-gray-400">Regular security audits by third-party experts</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-purple-900/20 flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-shield-alt text-purple-400 text-xs"></i>
+                            </div>
+                            <span class="text-gray-400">Automatic malware scanning of all updates</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-purple-900/20 flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-shield-alt text-purple-400 text-xs"></i>
+                            </div>
+                            <span class="text-gray-400">Secure boot verification to prevent tampering</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 rounded-full bg-purple-900/20 flex items-center justify-center mr-3 mt-1">
+                                <i class="fas fa-shield-alt text-purple-400 text-xs"></i>
+                            </div>
+                            <span class="text-gray-400">Hardware-bound licensing to prevent sharing</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-black/30 border border-purple-900/30 rounded-xl p-8 animate-fade-in">
+                <h3 class="text-xl font-bold mb-4 text-purple-400 flex items-center justify-center">
+                    <i class="fas fa-certificate mr-3"></i> Our Guarantee
+                </h3>
+                <div class="text-center max-w-4xl mx-auto">
+                    <p class="text-gray-400">
+                        We guarantee that Oblivion will never contain malware, spyware, or any form of data collection beyond what's necessary for basic functionality. Our software is used by security researchers and penetration testers who verify its safety.
+                    </p>
+                    <div class="mt-6 flex flex-wrap justify-center gap-4">
+                        <div class="bg-purple-900/20 border border-purple-700/30 rounded-lg px-6 py-3 inline-flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            <span class="text-gray-300">Verified clean by VirusTotal</span>
+                        </div>
+                        <div class="bg-purple-900/20 border border-purple-700/30 rounded-lg px-6 py-3 inline-flex items-center">
+                            <i class="fas fa-shield-virus text-blue-400 mr-2"></i>
+                            <span class="text-gray-300">Malware-free guarantee</span>
+                        </div>
+                        <div class="bg-purple-900/20 border border-purple-700/30 rounded-lg px-6 py-3 inline-flex items-center">
+                            <i class="fas fa-lock text-purple-400 mr-2"></i>
+                            <span class="text-gray-300">No data collection</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Terms & Careers Section -->
+    <section id ="Tos" class=py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-purple-900/10 to-transparent">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="animate-fade-in-down">
+                    <h2 class="text-3xl font-bold mb-6 gradient-text">Terms of Service</h2>
+                    <div class="bg-black/30 border border-purple-900/30 rounded-xl p-8">
+                        <div class="prose prose-invert max-w-none text-gray-400">
+                            <h4 class="text-purple-400">1. License Grant</h4>
+                            <p>Oblivion grants you a limited, non-exclusive, non-transferable license to use our software in accordance with these terms.</p>
+                            
+                            <h4 class="text-purple-400 mt-6">2. Restrictions</h4>
+                            <p>You may not reverse engineer, decompile, or disassemble the software. Distribution of modified versions is prohibited.</p>
+                            
+                            <h4 class="text-purple-400 mt-6">3. Liability</h4>
+                            <p>Oblivion is not responsible for any account bans or other consequences resulting from use of our software.</p>
+                            
+                            <h4 class="text-purple-400 mt-6">4. Updates</h4>
+                            <p>Your license includes access to all updates released during your subscription period.</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-fade-in-up">
+                    <h2 class="text-3xl font-bold mb-6 gradient-text">Careers</h2>
+                    <div class="bg-black/30 border border-purple-900/30 rounded-xl p-8">
+                        <p class="text-gray-400 mb-6">
+                            We're always looking for talented individuals to join our team. Currently seeking:
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="p-4 bg-purple-900/10 rounded-lg border border-purple-900/30 hover:bg-purple-900/20 transition-colors">
+                                <h4 class="font-medium text-white">Reverse Engineer</h4>
+                                <p class="text-sm text-gray-400 mt-1">Expertise in game anti-cheat systems and bypass techniques</p>
+                            </div>
+                            
+                            <div class="p-4 bg-purple-900/10 rounded-lg border border-purple-900/30 hover:bg-purple-900/20 transition-colors">
+                                <h4 class="font-medium text-white">Security Researcher</h4>
+                                <p class="text-sm text-gray-400 mt-1">Experience with malware analysis and secure coding practices</p>
+                            </div>
+                            
+                            <div class="p-4 bg-purple-900/10 rounded-lg border border-purple-900/30 hover:bg-purple-900/20 transition-colors">
+                                <h4 class="font-medium text-white">UI/UX Designer</h4>
+                                <p class="text-sm text-gray-400 mt-1">Skilled in creating intuitive interfaces for complex applications</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <a href="https://discord.gg/Epn4J6aBnT" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+                                <i class="fas fa-paper-plane mr-2"></i> Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="download" class="py-20 px-4 sm:px-6 lg:px-8 gradient-flow">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white animate-fade-in">Ready to Experience Oblivion?</h2>
+            <p class="text-xl text-purple-100 mb-8 max-w-3xl mx-auto animate-fade-in animate-delay-1">
+                Join thousands of satisfied users enjoying the most advanced Minecraft hacked client and Roblox executor available.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in animate-delay-2">
+                <a href="mainsite.html#download" class="px-8 py-4 bg-white text-purple-900 font-bold rounded-lg hover:bg-gray-100 transition-colors shadow-lg glow hover:scale-105">
+                    <i class="fas fa-download mr-2"></i> Download Now
+                </a>
+                <a href="https://discord.gg/Epn4J6aBnT" class="px-8 py-4 bg-black/30 text-white font-bold rounded-lg hover:bg-black/40 transition-colors border border-white/10 hover:scale-105">
+                    <i class="fas fa-users mr-2"></i> Join Community
+                </a>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black/50 border-t border-purple-900/50">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Products</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Minecraft Client</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Roblox Executor</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Script Hub</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Premium</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Resources</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Guides</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Company</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">About</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Privacy</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Connect</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Discord</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Twitter</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">YouTube</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-purple-900/50 pt-8 flex flex-col items-center">
+                <!-- Logo placeholder -->
+                <div class="flex-shrink-0 w-10 h-10 mb-4">
+                    <div class="w-full h-full rounded-lg border border-purple-500/30 bg-purple-500/20 flex items-center justify-center overflow-hidden glow">
+                        <img src="logo.png" alt="Oblivion Logo" class="w-20 h-20 object-contain">
+                    </div>
+                </div>
+                <p class="text-base text-gray-400 text-center">
+                    &copy; 2025 Oblivion. All rights reserved.
+                </p>
+                <div class="mt-6 flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-discord text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 p-3 bg-purple-600 rounded-full text-white shadow-lg hover:bg-purple-700 transition-all duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Accordion functionality
+        document.querySelectorAll('.accordion-btn').forEach(button
+</html>

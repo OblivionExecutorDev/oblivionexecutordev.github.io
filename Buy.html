@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Oblivion Premium</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7e22ce',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-fast': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f0e17;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #a855f7, #e879f9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
+        }
+        
+        .blob {
+            filter: blur(60px);
+            opacity: 0.2;
+            position: absolute;
+            z-index: -1;
+            border-radius: 50%;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(168, 85, 247, 0.3), 0 10px 10px -5px rgba(168, 85, 247, 0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #a855f7;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .payment-card {
+            background: rgba(15, 14, 23, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .payment-card:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            transform: translateY(-5px);
+        }
+        
+        .payment-card.selected {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, 0.1);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+        
+        .checkout-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+        
+        .checkout-btn:hover::after {
+            left: 100%;
+            top: 100%;
+        }
+        
+        .input-field {
+            background: rgba(30, 27, 46, 0.7);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            border-color: rgba(168, 85, 247, 0.6);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+        }
+        
+        .tab-btn {
+            position: relative;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            color: white;
+        }
+        
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #a855f7;
+            transition: width 0.3s ease;
+        }
+        
+        .tab-btn.active::after {
+            width: 100%;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .checkmark {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            background-color: rgba(168, 85, 247, 0.2);
+            border-radius: 50%;
+            position: relative;
+            margin-right: 10px;
+        }
+        
+        .checkmark::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid #a855f7;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .payment-card.selected .checkmark::after {
+            opacity: 1;
+        }
+        
+        .payment-method {
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: rgba(168, 85, 247, 0.6);
+            transform: scale(1.03);
+        }
+        
+        .payment-method.selected {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, 0.1);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+        }
+        
+        .feature-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: linear-gradient(90deg, #a855f7, #e879f9);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: rgba(15, 14, 23, 0.9);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="animate-fade-in">
+    <!-- Blob background elements -->
+    <div class="blob w-96 h-96 bg-purple-500 top-0 left-0 animate-float"></div>
+    <div class="blob w-96 h-96 bg-purple-600 bottom-0 right-0 animate-float-fast"></div>
+    <div class="blob w-64 h-64 bg-purple-400 top-1/2 left-1/4 animate-float"></div>
+    
+    <!-- Navigation -->
+    <nav class="backdrop-blur-md bg-black/50 border-b border-purple-900/50 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <!-- Logo placeholder -->
+                        <div class="flex-shrink-0 w-11 h-11">
+                            <div class="w-full h-full rounded-lg border border-purple-500/30 bg-purple-500/20 flex items-center justify-center overflow-hidden glow">
+                                <img src="logo.png" alt="Oblivion Logo" class="w-20 h-20 object-contain">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="mainsite.html#home" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                            <a href="mainsite.html#features" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Features</a>
+                            <a href="mainsite.html#products" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Products</a>
+                            <a href="mainsite.html#pricing" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Pricing</a>
+                            <a href="#faq" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">FAQ</a>
+                            <a href="About.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+                            <a href="InstallationGuide.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Guide</a>
+                            <a href="Scripts.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Script Hub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <a href="mainsite.html#download" class="bg-gradient-to-r from-purple-600 to-purple-400 text-white px-4 py-2 rounded-md text-sm font-medium hover:from-purple-700 hover:to-purple-500 transition-all duration-300 shadow-lg glow">
+                            Download Now
+                        </a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-purple-400 hover:text-white hover:bg-purple-700 focus:outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden" id="mobile-menu">
+          <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="mainsite.html#home" class="block px-3 py-2 text-base font-medium text-white hover:bg-purple-700">Home</a>
+            <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-700">Features</a>
+            <a href="mainsite.html#products" class="block px-3 py-2 text-base font-medium text-white hover:bg-purple-700">Products</a>
+            <a href="mainsite.html#pricing" class="block px-3 py-2 text-base font-medium text-white hover:bg-purple-700">Pricing</a>
+            <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-700">FAQ</a>
+            <a href="About.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+            <a href="InstallationGuide.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Guide</a>
+            <a href="Scripts.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Script Hub</a>
+            <a href="#download" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-purple-600">Download</a>
+          </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 gradient-text glow-text">Upgrade to Oblivion Premium</h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Unlock exclusive features and take your gaming experience to the next level</p>
+                
+                <div class="mt-6 flex justify-center space-x-4">
+                    <div class="flex items-center text-purple-400">
+                        <i class="fas fa-shield-alt mr-2"></i>
+                        <span>Secure Payments</span>
+                    </div>
+                    <div class="flex items-center text-purple-400">
+                        <i class="fas fa-sync-alt mr-2"></i>
+                        <span>Cancel Anytime</span>
+                    </div>
+                    <div class="flex items-center text-purple-400">
+                        <i class="fas fa-headset mr-2"></i>
+                        <span>24/7 Support</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Subscription Plans -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6 text-white flex items-center">
+                        <i class="fas fa-crown text-purple-500 mr-3"></i>
+                        Choose Your Plan
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <!-- Basic Plan -->
+                        <div class="payment-card rounded-xl p-6 cursor-pointer relative" onclick="selectPlan('basic')" id="basic-plan">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center">
+                                    <div class="checkmark"></div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white">Basic</h3>
+                                        <p class="text-gray-400">Essential features for casual players</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-white">$4.99<span class="text-sm font-normal text-gray-400">/month</span></div>
+                                    <div class="text-sm text-purple-400">Save 10% with annual</div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pl-8">
+                                <ul class="space-y-2 text-gray-400">
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Basic Minecraft cheats</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Limited Roblox executor</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Standard updates</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Community support</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Pro Plan -->
+                        <div class="payment-card rounded-xl p-6 cursor-pointer relative" onclick="selectPlan('pro')" id="pro-plan">
+                            <div class="feature-badge">Most Popular</div>
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center">
+                                    <div class="checkmark"></div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white">Pro</h3>
+                                        <p class="text-gray-400">Advanced features for competitive players</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-white">$9.99<span class="text-sm font-normal text-gray-400">/month</span></div>
+                                    <div class="text-sm text-purple-400">Save 15% with annual</div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pl-8">
+                                <ul class="space-y-2 text-gray-400">
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> All Basic features</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Advanced Minecraft cheats</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Full Roblox executor</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Priority updates</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Email support</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Ultimate Plan -->
+                        <div class="payment-card rounded-xl p-6 cursor-pointer relative" onclick="selectPlan('ultimate')" id="ultimate-plan">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center">
+                                    <div class="checkmark"></div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white">Ultimate</h3>
+                                        <p class="text-gray-400">Everything for the ultimate advantage</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-white">$19.99<span class="text-sm font-normal text-gray-400">/month</span></div>
+                                    <div class="text-sm text-purple-400">Save 20% with annual</div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pl-8">
+                                <ul class="space-y-2 text-gray-400">
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> All Pro features</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Premium Minecraft cheats</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Advanced Roblox executor</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Instant updates</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> 24/7 priority support</li>
+                                    <li class="flex items-center"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Exclusive scripts & features</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 bg-black/30 border border-purple-900/30 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center">
+                            <i class="fas fa-info-circle text-purple-500 mr-2"></i>
+                            Subscription Details
+                        </h3>
+                        <ul class="space-y-3 text-gray-400">
+                            <li class="flex items-start">
+                                <i class="fas fa-sync-alt text-purple-500 mt-1 mr-3"></i>
+                                <span>Your subscription will automatically renew each month. You can cancel anytime.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-shield-alt text-purple-500 mt-1 mr-3"></i>
+                                <span>All payments are secure and encrypted. We never store your payment details.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-question-circle text-purple-500 mt-1 mr-3"></i>
+                                <span>Need help? <a href="#" class="text-purple-400 hover:underline">Contact our support team</a></span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-6 bg-gradient-to-r from-purple-900/50 to-purple-800/30 border border-purple-900/30 rounded-xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-3">Frequently Asked Questions</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <button class="flex items-center justify-between w-full text-left text-purple-400 hover:text-white" onclick="toggleFAQ('faq1')">
+                                    <span>How do I cancel my subscription?</span>
+                                    <i class="fas fa-chevron-down transition-transform duration-200" id="faq1-icon"></i>
+                                </button>
+                                <div id="faq1" class="hidden mt-2 text-gray-400 text-sm">
+                                    You can cancel your subscription at any time from your account settings. Your premium features will remain active until the end of your current billing period.
+                                </div>
+                            </div>
+                            <div>
+                                <button class="flex items-center justify-between w-full text-left text-purple-400 hover:text-white" onclick="toggleFAQ('faq2')">
+                                    <span>Is there a free trial available?</span>
+                                    <i class="fas fa-chevron-down transition-transform duration-200" id="faq2-icon"></i>
+                                </button>
+                                <div id="faq2" class="hidden mt-2 text-gray-400 text-sm">
+                                    We occasionally offer free trials during special promotions. Join our Discord to stay updated on current offers.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Checkout Form -->
+                <div>
+                    <div class="bg-black/30 border border-purple-900/30 rounded-xl p-6 sticky top-24">
+                        <h2 class="text-2xl font-bold mb-6 text-white flex items-center">
+                            <i class="fas fa-shopping-cart text-purple-500 mr-3"></i>
+                            Complete Your Purchase
+                        </h2>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-lg font-medium text-white mb-3">Selected Plan</h3>
+                            <div id="selected-plan-display" class="bg-purple-900/20 border border-purple-700/30 rounded-lg px-4 py-3">
+                                <p class="text-gray-400">Please select a plan</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Method Tabs -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-medium text-white mb-3 flex items-center">
+                                <i class="fas fa-credit-card text-purple-500 mr-2"></i>
+                                Payment Method
+                            </h3>
+                            <div class="flex border-b border-purple-900/30 mb-4">
+                                <button class="tab-btn active" onclick="showTab('crypto')">
+                                    <i class="fab fa-bitcoin mr-2"></i>Crypto
+                                </button>
+                            </div>
+                            
+                            <!-- Crypto Tab -->
+                            <div id="crypto" class="tab-content active">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-400 mb-2">Select Cryptocurrency</label>
+                                        <div class="grid grid-cols-3 gap-3">
+                                            <div class="payment-method rounded-lg p-3 text-center cursor-pointer" onclick="selectCrypto('btc')">
+                                                <img src="https://cdn.pixabay.com/photo/2013/12/08/12/12/bitcoin-225079_960_720.png" class="w-8 h-8 mx-auto mb-2" />
+                                                <span class="text-sm">Bitcoin</span>
+                                            </div>
+                                            <div class="payment-method rounded-lg p-3 text-center cursor-pointer" onclick="selectCrypto('eth')">
+                                                <img src="https://cdn.pixabay.com/photo/2021/05/24/09/15/ethereum-logo-6278328_960_720.png" class="w-8 h-8 mx-auto mb-2" />
+                                                <span class="text-sm">Ethereum</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="crypto-address" class="hidden">
+                                        <div class="bg-purple-900/20 border border-purple-700/30 rounded-lg p-4 mt-4">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="text-sm text-gray-400">Send exact amount to:</span>
+                                                <button class="text-xs text-purple-400 hover:underline flex items-center" onclick="copyToClipboard('crypto-address-text')">
+                                                    <i class="fas fa-copy mr-1"></i>Copy
+                                                </button>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <code id="crypto-address-text" class="text-sm text-white break-all"></code>
+                                            </div>
+                                            <div class="mt-3 text-xs text-gray-500">
+                                                <p>Payment will be processed after 3 confirmations</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Promo Code -->
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="text-sm font-medium text-gray-400 flex items-center">
+                                    <i class="fas fa-tag text-purple-500 mr-2"></i>
+                                    Promo Code
+                                </label>
+                                <button class="text-xs text-purple-400 hover:underline flex items-center" onclick="togglePromoField()">
+                                    <i class="fas fa-plus-circle mr-1"></i>Have a code?
+                                </button>
+                            </div>
+                            <div id="promo-field" class="hidden">
+                                <div class="flex">
+                                    <input type="text" class="input-field flex-1 px-4 py-3 rounded-l-lg" placeholder="Enter promo code">
+                                    <button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-r-lg transition-colors flex items-center">
+                                        <i class="fas fa-check mr-2"></i>Apply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Order Summary -->
+                        <div class="border-t border-purple-900/30 pt-4 mb-6">
+                            <h3 class="text-lg font-medium text-white mb-4 flex items-center">
+                                <i class="fas fa-receipt text-purple-500 mr-2"></i>
+                                Order Summary
+                            </h3>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400">Subtotal</span>
+                                <span id="subtotal" class="text-gray-300">$0.00</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-400">Discount</span>
+                                <span class="text-purple-400">-$0.00</span>
+                            </div>
+                            <div class="flex justify-between items-center text-lg font-medium mt-4 pt-3 border-t border-purple-900/30">
+                                <span class="text-white">Total</span>
+                                <span id="total" class="text-white">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Terms & Submit -->
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <input type="checkbox" id="terms" class="mt-1 mr-3 rounded border-purple-500 text-purple-600 focus:ring-purple-500">
+                                <label for="terms" class="text-sm text-gray-400">
+                                    I agree to the <a href="about.html#Tos" class="text-purple-400 hover:underline">Terms of Service</a>. I understand my subscription will automatically renew each month until canceled.
+                                </label>
+                            </div>
+                            
+                            <button id="checkout-btn" class="checkout-btn w-full bg-gradient-to-r from-purple-600 to-purple-400 text-white px-6 py-4 rounded-lg font-bold text-lg hover:from-purple-700 hover:to-purple-500 transition-colors shadow-lg glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center" disabled>
+                                <i class="fas fa-lock mr-3"></i>Complete Purchase
+                            </button>
+                            
+                            <p class="text-xs text-center text-gray-500">
+                                <i class="fas fa-lock mr-1"></i> Your payment is secure and encrypted
+                            </p>
+                            
+                            <div class="flex items-center justify-center space-x-2 text-gray-500 text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black/50 border-t border-purple-900/50">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Products</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-cube mr-2"></i>Minecraft Client</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-gamepad mr-2"></i>Roblox Executor</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-code mr-2"></i>Script Hub</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-crown mr-2"></i>Premium</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Resources</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-book mr-2"></i>Documentation</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-graduation-cap mr-2"></i>Guides</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-newspaper mr-2"></i>Blog</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-question-circle mr-2"></i>Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Company</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-info-circle mr-2"></i>About</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-briefcase mr-2"></i>Careers</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-user-shield mr-2"></i>Privacy</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fas fa-file-contract mr-2"></i>Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Connect</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fab fa-discord mr-2"></i>Discord</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fab fa-twitter mr-2"></i>Twitter</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fab fa-youtube mr-2"></i>YouTube</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white flex items-center"><i class="fab fa-github mr-2"></i>GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-purple-900/50 pt-8 flex flex-col items-center">
+                <!-- Logo placeholder -->
+                <div class="flex-shrink-0 w-10 h-10 mb-4">
+                    <div class="w-full h-full rounded-lg border border-purple-500/30 bg-purple-500/20 flex items-center justify-center overflow-hidden glow">
+                        <img src="logo.png" alt="Oblivion Logo" class="w-20 h-20 object-contain">
+                    </div>
+                </div>
+                <p class="text-base text-gray-400 text-center">
+                    &copy; 2025 Oblivion. All rights reserved.
+                </p>
+                <div class="mt-6 flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-discord text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 p-3 bg-purple-600 rounded-full text-white shadow-lg hover:bg-purple-700 transition-all duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
+        <div class="bg-black/70 border border-purple-900/30 rounded-xl p-8 max-w-md w-full backdrop-blur-md">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-check-circle text-green-500 text-4xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Payment Received!</h3>
+                <p class="text-gray-400 mb-6">Thank you for upgrading to Oblivion Premium</p>
+				<b class="text-white-900/30 mb-6">Please Continue on Discord via server or message @tuncaylive</b>
+				<div style="margin-top: 15px;"></div>
+                <div class="bg-purple-200/20 border border-purple-700/30 rounded-lg p-4 mb-6">
+                    <div class="text-sm text-gray-400 mb-1">
+                        Your order ID: <span id="order-id" class="text-white">00000</span>
+                    </div>
+                    <div class="text-sm text-gray-400">
+                        Plan: <span id="success-plan" class="text-white">Basic</span>
+                    </div>
+                </div>
+				<button onclick="closeSuccessModal(); window.open('https://discord.gg/Epn4J6aBnT', '_blank');" 
+					class="w-full bg-gradient-to-r from-purple-600 to-purple-400 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-purple-500 transition-colors">
+					Continue on Discord
+				</button>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Plan selection
+        let selectedPlan = null;
+        
+        function selectPlan(plan) {
+            // Remove selected class from all plans
+            document.querySelectorAll('.payment-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selected class to chosen plan
+            document.getElementById(`${plan}-plan`).classList.add('selected');
+            
+            // Update selected plan variable
+            selectedPlan = plan;
+            
+            // Update display
+            const planDisplay = document.getElementById('selected-plan-display');
+            let planName, planPrice;
+            
+            switch(plan) {
+                case 'basic':
+                    planName = 'Basic';
+                    planPrice = '$4.99';
+                    break;
+                case 'pro':
+                    planName = 'Pro';
+                    planPrice = '$9.99';
+                    break;
+                case 'ultimate':
+                    planName = 'Ultimate';
+                    planPrice = '$19.99';
+                    break;
+            }
+            
+            planDisplay.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="font-medium text-white">${planName} Plan</div>
+                        <div class="text-sm text-gray-400">Monthly subscription</div>
+                    </div>
+                    <div class="text-lg font-bold text-white">${planPrice}</div>
+                </div>
+            `;
+            
+            // Update totals
+            document.getElementById('subtotal').textContent = planPrice;
+            document.getElementById('total').textContent = planPrice;
+            
+            // Enable checkout button if terms are checked
+            const termsChecked = document.getElementById('terms').checked;
+            document.getElementById('checkout-btn').disabled = !termsChecked;
+        }
+        
+        // Payment method tabs
+        function showTab(tabId) {
+            // Update active tab button
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.tab-btn[onclick="showTab('${tabId}')"]`).classList.add('active');
+            
+            // Update active tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        // Crypto selection
+		function selectCrypto(crypto, event) {
+			const target = event?.currentTarget ?? window.event?.currentTarget;
+			if (!target) return console.error("No event target found, fam. You gooned it.");
+
+			// Remove selected class
+			document.querySelectorAll('.payment-method').forEach(method => {
+				method.classList.remove('selected');
+			});
+
+			target.classList.add('selected');
+
+			// Show address
+			document.getElementById('crypto-address').classList.remove('hidden');
+
+			const addressText = document.getElementById('crypto-address-text');
+			switch(crypto) {
+				case 'btc':
+					addressText.textContent = 'bc1qknsglcusj465qsqdh9frevddyjpqntyfd2pg9r';
+					break;
+				case 'eth':
+					addressText.textContent = '0xC912EB5A34C67870C951eE0099D7c84Ff2937b5A';
+					break;
+			}
+		}
+
+        
+        // Copy to clipboard
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                // Show copied tooltip
+                const button = event.currentTarget;
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1"></i>Copied!';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+        
+        // Toggle promo code field
+        function togglePromoField() {
+            const promoField = document.getElementById('promo-field');
+            promoField.classList.toggle('hidden');
+            
+            if (!promoField.classList.contains('hidden')) {
+                promoField.querySelector('input').focus();
+            }
+        }
+        
+        // Toggle FAQ items
+        function toggleFAQ(id) {
+            const faq = document.getElementById(id);
+            const icon = document.getElementById(`${id}-icon`);
+            
+            faq.classList.toggle('hidden');
+            icon.classList.toggle('transform');
+            icon.classList.toggle('rotate-180');
+        }
+        
+        // Terms checkbox
+        document.getElementById('terms').addEventListener('change', function() {
+            document.getElementById('checkout-btn').disabled = !this.checked || !selectedPlan;
+        });
+        
+        // Checkout button
+        document.getElementById('checkout-btn').addEventListener('click', function() {
+            if (!selectedPlan) return;
+            
+            // Create confetti effect
+            createConfetti();
+            
+            // Set order details
+            let planName;
+            switch(selectedPlan) {
+                case 'basic':
+                    planName = 'Basic';
+                    break;
+                case 'pro':
+                    planName = 'Pro';
+                    break;
+                case 'ultimate':
+                    planName = 'Ultimate';
+                    break;
+            }
+            
+            document.getElementById('success-plan').textContent = planName;
+            document.getElementById('order-id').textContent = Math.floor(10000 + Math.random() * 90000);
+            
+            // Show modal
+            document.getElementById('success-modal').classList.remove('hidden');
+        });
+        
+        // Close success modal
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            // In a real app, you would redirect to dashboard
+        }
+        
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#a855f7', '#e879f9', '#9333ea', '#6b21a8', '#ffffff'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 8 + 5 + 'px';
+                confetti.style.height = Math.random() * 8 + 5 + 'px';
+                confetti.style.opacity = '1';
+                confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                
+                document.body.appendChild(confetti);
+                
+                const animationDuration = Math.random() * 3 + 2;
+                
+                confetti.animate([
+                    { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate(${Math.random() * 200 - 100}px, ${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: animationDuration * 1000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.9, 1)'
+                });
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, animationDuration * 1000);
+            }
+        }
+    </script>
+</body>
+</html>

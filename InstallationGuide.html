@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oblivion | Minecraft Hacked Client & Roblox Executor</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7e22ce',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-fast': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f0e17;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #a855f7, #e879f9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
+        }
+        
+        .blob {
+            filter: blur(60px);
+            opacity: 0.2;
+            position: absolute;
+            z-index: -1;
+            border-radius: 50%;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(168, 85, 247, 0.3), 0 10px 10px -5px rgba(168, 85, 247, 0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #a855f7;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            color: #a855f7;
+        }
+        
+        .download-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+        
+        .download-btn:hover::after {
+            left: 100%;
+            top: 100%;
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gradient-flow {
+            background: linear-gradient(270deg, #7e22ce, #a855f7, #e879f9);
+            background-size: 200% 200%;
+            animation: gradientFlow 8s ease infinite;
+        }
+        
+        /* Video showcase styles */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.5);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(168, 85, 247, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .play-button:hover {
+            background: rgba(168, 85, 247, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .play-button i {
+            color: white;
+            font-size: 30px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Blob background elements -->
+    <div class="blob w-96 h-96 bg-purple-500 top-0 left-0 animate-float"></div>
+    <div class="blob w-96 h-96 bg-purple-600 bottom-0 right-0 animate-float-fast"></div>
+    <div class="blob w-64 h-64 bg-purple-400 top-1/2 left-1/4 animate-float"></div>
+    
+    <!-- Navigation -->
+    <nav class="backdrop-blur-md bg-black/50 border-b border-purple-900/50 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <!-- Logo placeholder -->
+                        <div class="flex-shrink-0 w-11 h-11">
+                            <div class="w-full h-full rounded-lg border border-purple-500/30 bg-purple-500/20 flex items-center justify-center overflow-hidden">
+                                <img src="logo.png" alt="Oblivion Logo" class="w-20 h-20 object-contain">
+                            </div>
+                        </div>
+                    </div>
+					<div class="hidden md:block">
+						<div class="ml-10 flex items-baseline space-x-4">
+							<a href="mainsite.html#home" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+							<a href="#features" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Features</a>
+							<a href="mainsite.html#products" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Products</a>
+							<a href="mainsite.html#pricing" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Pricing</a>								
+							<a href="#faq" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">FAQ</a>
+							<a href="About.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+							<a href="InstallationGuide.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Guide</a>
+							<a href="Scripts.html" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Script Hub</a>
+						</div>
+					</div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <a href="#download" class="bg-gradient-to-r from-purple-600 to-purple-400 text-white px-4 py-2 rounded-md text-sm font-medium hover:from-purple-700 hover:to-purple-500 transition-all duration-300 shadow-lg glow">
+                            Download Now
+                        </a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-purple-400 hover:text-white hover:bg-purple-700 focus:outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+		<!-- Mobile menu -->
+		<div class="hidden md:hidden" id="mobile-menu">
+		  <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+			<a href="mainsite.html#home" class="block px-3 py-2 text-base font-medium text-white hover:bg-purple-700">Home</a>
+			<a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-700">Features</a>
+			<a href="mainsite.html#products" class="block px-3 py-2 text-base font-medium text-white hover:bg-purple-700">Products</a>
+			<a href="mainsite.html#pricing" class="block px-3 py-2 text-base font-medium text-white hover:bg-purple-700">Pricing</a>
+			<a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-purple-700">FAQ</a>
+			<a href="#download" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-purple-600">Download</a>
+		  </div>
+		</div>
+
+
+       
+
+    </nav>
+
+
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    <span class="gradient-text glow-text">Oblivion</span> Client
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-10">
+                    The most powerful and undetectable Minecraft hacked client & Roblox executor on the market.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#download" class="bg-gradient-to-r from-purple-600 to-purple-400 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-purple-700 hover:to-purple-500 transition-all duration-300 shadow-lg glow">
+                        Download Now
+                    </a>
+                    <a href="#video-showcase" class="bg-white/10 border border-white/20 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/20 transition-all duration-300">
+                        Watch Guide
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Showcase Section -->
+    <section id="video-showcase" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black/30 to-black/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="gradient-text">Oblivion</span> Installation Guide
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    See how to install and use the best Roblox Executor and Minecraft Client
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="video-container relative">
+                    <!-- YouTube embed with placeholder image -->
+                    <iframe id="youtube-video" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    
+                    <!-- Play button overlay (hidden when video is playing) -->
+                    <div id="play-button" class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    
+                    <!-- Thumbnail placeholder (would be replaced with actual thumbnail) -->
+                    <div id="video-thumbnail" class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg');">
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Powerful <span class="gradient-text">Features</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Oblivion comes packed with everything you need to dominate the game.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card bg-white/5 border border-white/10 rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300 card-hover">
+                    <div class="feature-icon text-purple-400 mb-6">
+                        <i class="fas fa-ghost text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Ghost Features</h3>
+                    <p class="text-gray-300">
+                        Advanced bypasses that make your cheating appear completely legitimate to spectators and admins.
+                    </p>
+                </div>
+                <div class="feature-card bg-white/5 border border-white/10 rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300 card-hover">
+                    <div class="feature-icon text-purple-400 mb-6">
+                        <i class="fas fa-robot text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Script Support</h3>
+                    <p class="text-gray-300">
+                        Full Lua scripting support to create or import custom scripts for any game mode or scenario.
+                    </p>
+                </div>
+                <div class="feature-card bg-white/5 border border-white/10 rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300 card-hover">
+                    <div class="feature-icon text-purple-400 mb-6">
+                        <i class="fas fa-palette text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Custom UI</h3>
+                    <p class="text-gray-300">
+                        Beautiful, intuitive interface with customizable themes and layouts to suit your preferences.
+                    </p>
+                </div>
+                <div class="feature-card bg-white/5 border border-white/10 rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300 card-hover">
+                    <div class="feature-icon text-purple-400 mb-6">
+                        <i class="fas fa-network-wired text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Server Compatibility</h3>
+                    <p class="text-gray-300">
+                        Works on all major servers including Hypixel, Mineplex, and hundreds of others.
+                    </p>
+                </div>
+                <div class="feature-card bg-white/5 border border-white/10 rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300 card-hover">
+                    <div class="feature-icon text-purple-400 mb-6">
+                        <i class="fas fa-shield-alt text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Undetectable</h3>
+                    <p class="text-gray-300">
+                        Our clients use advanced obfuscation techniques to bypass anti-cheat systems and remain undetected. 
+                    </p>
+                </div>
+                <div class="feature-card bg-white/5 border border-white/10 rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300 card-hover">
+                    <div class="feature-icon text-purple-400 mb-6">
+                        <i class="fas fa-headset text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Premium Support</h3>
+                    <p class="text-gray-300">
+                        Access to our exclusive support team for help with setup, configuration, and troubleshooting.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Frequently Asked <span class="gradient-text">Questions</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Find answers to common questions about Oblivion.
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <div class="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left hover:bg-white/10 transition-all duration-300">
+                            <span class="text-lg font-medium">Is Oblivion safe to use?</span>
+                            <i class="fas fa-chevron-down text-purple-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-300">
+                                
+
+							Yes, Oblivion is completely safe to use. All our downloads are scanned for malware and viruses before release. We prioritize user security and privacy above all else. However, using hacked clients or executors may violate the terms of service of the games you use them with. Use at your own discretion.
+
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left hover:bg-white/10 transition-all duration-300">
+                            <span class="text-lg font-medium">How often are your clients updated?</span>
+                            <i class="fas fa-chevron-down text-purple-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-300">
+                                We update our clients regularly to ensure they remain undetected and compatible with the latest game versions. Free users typically receive updates within 1-2 weeks of game updates, while premium users get immediate updates as soon as we develop bypasses.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left hover:bg-white/10 transition-all duration-300">
+                            <span class="text-lg font-medium">What payment methods do you accept?</span>
+                            <i class="fas fa-chevron-down text-purple-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-300">
+                                We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and cryptocurrency payments including Bitcoin, Ethereum, and Litecoin. All payments are processed through secure third-party processors.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left hover:bg-white/10 transition-all duration-300">
+                            <span class="text-lg font-medium">Can I get banned for using Oblivion?</span>
+                            <i class="fas fa-chevron-down text-purple-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="mb-2">While our clients are designed to be undetectable, there is always a risk of being banned when using third-party software with online games. We recommend:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Using our clients responsibly and not making it obvious you're cheating</li>
+                                <li>Not using the most blatant features on high-profile accounts</li>
+                                <li>Following our usage guides to minimize detection risk</li>
+                            </ul>
+                            <p class="mt-2">Oblivion is not responsible for any bans that may occur from using our software.
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left hover:bg-white/10 transition-all duration-300">
+                            <span class="text-lg font-medium">Do you offer refunds?</span>
+                            <i class="fas fa-chevron-down text-purple-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-300">
+                                Due to the nature of our products, we generally do not offer refunds. However, if you experience technical issues that we cannot resolve, we may consider refund requests on a case-by-case basis within 7 days of purchase.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black/30 to-black/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Ready to <span class="gradient-text">Dominate</span>?
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Download Oblivion today and experience the ultimate gaming advantage.
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-xl p-10 backdrop-blur-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">Download Options</h3>
+                        <div class="space-y-4">
+                            <a href="#" class="download-btn block w-full bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500 text-white py-4 px-6 rounded-lg font-medium transition-all duration-300 glow flex items-center justify-between">
+                                <span>Roblox Executor</span>
+                                <img src="robloxicon.png" alt="Roblox Icon" class="h-8 w-8">
+                            </a>
+                            <a href="#" class="download-btn block w-full bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-800 hover:to-gray-700 text-white py-4 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-between">
+                                <span>Minecraft Hacked Client</span>
+                                <img src="minecraft-grass-cube.png" alt="Minecraft Icon" class="h-8 w-8">
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">Free features</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start text-gray-300">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-2"></i>
+                                <span>Script and Lua editor</span>
+                            </li>
+                            <li class="flex items-start text-gray-300">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-2"></i>
+                                <span>Universal script compatibility</span>
+                            </li>
+                            <li class="flex items-start text-gray-300">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-2"></i>
+                                <span>Save and open scripts from the editor</span>
+                            </li>
+                            <li class="flex items-start text-gray-300">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-2"></i>
+                                <span>Java 1.21.4 (for Minecraft client)</span>
+                            </li>
+                            <li class="flex items-start text-gray-300">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-2"></i>
+                                <span>50+ Modules and Clean UI design</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="mt-8 bg-black/30 border border-purple-500/30 rounded-lg p-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-shield-alt text-purple-400 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Security Notice</h4>
+                                    <p class="text-sm text-gray-300">
+                                        Our downloads are 100% virus-free. Some antivirus programs may flag game clients as potentially unwanted programs (PUP). You may need to add an exception.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black/50 border-t border-purple-900/50">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Products</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Minecraft Client</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Roblox Executor</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Script Hub</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Premium</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Resources</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Guides</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Company</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">About</a></li>
+        <li><a href="#" class="text-base text-gray-300 hover:text-white">Careers</a></li>
+        <li><a href="#" class="text-base text-gray-300 hover:text-white">Privacy</a></li>
+        <li><a href="#" class="text-base text-gray-300 hover:text-white">Terms</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-sm font-semibold text-purple-400 tracking-wider uppercase">Connect</h3>
+      <ul class="mt-4 space-y-4">
+        <li><a href="#" class="text-base text-gray-300 hover:text-white">Discord</a></li>
+        <li><a href="#" class="text-base text-gray-300 hover:text-white">Twitter</a></li>
+        <li><a href="#" class="text-base text-gray-300 hover:text-white">YouTube</a></li>
+        <li><a href="#" class="text-base text-gray-300 hover:text-white">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="mt-12 border-t border-purple-900/50 pt-8 flex flex-col items-center">
+    <!-- Logo placeholder -->
+    <div class="flex-shrink-0 w-10 h-10">
+      <div class="w-full h-full rounded-lg border border-purple-500/30 bg-purple-500/20 flex items-center justify-center overflow-hidden">
+        <img src="logo.png" alt="Oblivion Logo" class="w-20 h-20 object-contain">
+      </div>
+    </div>
+    <p class="text-base text-gray-400 text-center">
+      &copy; 2025 Oblivion. All rights reserved.
+    </p>
+    <div class="mt-6 flex space-x-6">
+      <a href="#" class="text-gray-400 hover:text-white">
+        <i class="fab fa-discord text-xl"></i>
+      </a>
+      <a href="#" class="text-gray-400 hover:text-white">
+        <i class="fab fa-twitter text-xl"></i>
+      </a>
+      <a href="#" class="text-gray-400 hover:text-white">
+        <i class="fab fa-youtube text-xl"></i>
+      </a>
+      <a href="#" class="text-gray-400 hover:text-white">
+        <i class="fab fa-github text-xl"></i>
+      </a>
+    </div>
+  </div>
+</div>
+</footer>
+
+<!-- Back to top button -->
+<button id="back-to-top" class="fixed bottom-8 right-8 p-3 bg-purple-600 rounded-full text-white shadow-lg hover:bg-purple-700 transition-all duration-300 opacity-0 invisible">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+  // Mobile menu toggle
+  document.getElementById('mobile-menu-button').addEventListener('click', function() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+  });
+  
+  // Back to top button
+  const backToTopButton = document.getElementById('back-to-top');
+  
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+      backToTopButton.classList.remove('opacity-0', 'invisible');
+      backToTopButton.classList.add('opacity-100', 'visible');
+    } else {
+      backToTopButton.classList.remove('opacity-100', 'visible');
+      backToTopButton.classList.add('opacity-0', 'invisible');
+    }
+  });
+  
+  backToTopButton.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+  
+// Smooth scrolling ONLY for same-page anchor links (NEW VERSION)
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  // Skip if the link has both a file path and hash (like mainsite.html#section)
+  if (anchor.getAttribute('href').includes('.html')) return;
+  
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 80,
+        behavior: 'smooth'
+      });
+      
+      // Close mobile menu if open
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (!mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+      }
+    }
+  });
+});
+  
+  // Animate elements when they come into view
+  const animateOnScroll = function() {
+    const elements = document.querySelectorAll('.feature-card, .card-hover');
+    
+    elements.forEach(element => {
+      const elementPosition = element.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      if (elementPosition < windowHeight - 100) {
+        element.classList.add('animate-fade-in-up');
+      }
+    });
+  };
+  
+  window.addEventListener('scroll', animateOnScroll);
+  window.addEventListener('load', animateOnScroll);
+  
+  // Tooltip functionality
+  document.querySelectorAll('.tooltip').forEach(element => {
+    element.addEventListener('mouseenter', function() {
+      const tooltip = this.querySelector('.tooltip-text');
+      tooltip.classList.remove('hidden');
+    });
+    
+    element.addEventListener('mouseleave', function() {
+      const tooltip = this.querySelector('.tooltip-text');
+      tooltip.classList.add('hidden');
+    });
+  });
+  
+  // FAQ accordion functionality
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', function() {
+      const answer = this.nextElementSibling;
+      const icon = this.querySelector('i');
+      
+      // Toggle answer visibility
+      answer.classList.toggle('hidden');
+      
+      // Rotate icon
+      icon.classList.toggle('rotate-180');
+      
+      // Close other open answers
+      document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+        if (otherAnswer !== answer && !otherAnswer.classList.contains('hidden')) {
+          otherAnswer.classList.add('hidden');
+          const otherIcon = otherAnswer.previousElementSibling.querySelector('i');
+          otherIcon.classList.remove('rotate-180');
+        }
+      });
+    });
+  });
+  
+  // Video showcase functionality
+  const videoThumbnail = document.getElementById('video-thumbnail');
+  const playButton = document.getElementById('play-button');
+  const youtubeVideo = document.getElementById('youtube-video');
+  
+  if (playButton && youtubeVideo) {
+    playButton.addEventListener('click', function() {
+      // Hide thumbnail and play button
+      videoThumbnail.style.display = 'none';
+      playButton.style.display = 'none';
+      
+      // Play the video
+      youtubeVideo.src += '&autoplay=1';
+    });
+  }
+  
+</script>
+</body>
+</html>
